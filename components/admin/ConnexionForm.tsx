@@ -13,7 +13,6 @@
 "use client";
 
 import { useCallback, useId, useRef, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { connexion, type ResultatConnexion } from "@/app/admin/login/actions";
 import { Turnstile } from "./Turnstile";
 
@@ -29,7 +28,6 @@ export function ConnexionForm({
   siteKeyTurnstile: string | null;
   avis: string | null;
 }) {
-  const routeur = useRouter();
   const [enCours, setEnCours] = useState(false);
   const [resultat, setResultat] = useState<ResultatConnexion | null>(null);
   const [jeton, setJeton] = useState("");
