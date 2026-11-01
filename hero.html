@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KONIGDEV — Portfolio</title>
+  
+  <!-- Polices Google : Syne (800) & Plus Jakarta Sans (400, 500, 600, 700) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES CSS & THÈME
+       ========================================================================== */
+    :root {
+      --bg-page: #EEF2F7;
+      --bg-card-start: #FFFFFF;
+      --bg-card-mid: #F8FAFC;
+      --bg-card-end: #EFF3F8;
+      
+      --accent: #22252A;          /* noir charbon */
+      --accent-dark: #14161A;
+      --accent-light: #3A3F46;
+      --text-title: #22252A;
+      --text-body: #4A5663;
+      --text-muted: #6B7480;
+      
+      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-display: 'Syne', sans-serif;
+      
+      --shadow-main-card: 0 25px 70px rgba(115, 128, 145, 0.16), 0 4px 18px rgba(115, 128, 145, 0.06);
+      --shadow-card-float: 0 16px 36px rgba(110, 125, 145, 0.14), 0 2px 8px rgba(110, 125, 145, 0.05);
+      --shadow-btn: 0 10px 24px rgba(20, 22, 26, 0.28);
+      --shadow-pill: 0 4px 14px rgba(120, 135, 155, 0.12);
+      --shadow-sphere: 0 12px 28px rgba(130, 145, 165, 0.22), inset 0 2px 6px rgba(255, 255, 255, 0.95);
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 25%, #F7FAFD 0%, var(--bg-page) 100%);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 24px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       SCÈNE PRINCIPALE (DESKTOP REFERENCE 1504 × 1128)
+       ========================================================================== */
+    .hero-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Sphères d'ambiance floues et translucides autour de la carte */
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.98), rgba(230, 237, 246, 0.7) 70%, rgba(195, 208, 225, 0.35) 100%);
+      box-shadow: var(--shadow-sphere);
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat 8s ease-in-out infinite alternate;
+    }
+    .ambient-orb.orb-1 {
+      width: 68px;
+      height: 68px;
+      top: -24px;
+      left: -20px;
+      animation-delay: 0s;
+    }
+    .ambient-orb.orb-2 {
+      width: 52px;
+      height: 52px;
+      top: 20px;
+      right: -25px;
+      animation-delay: 2s;
+    }
+    .ambient-orb.orb-3 {
+      width: 44px;
+      height: 44px;
+      bottom: -15px;
+      left: 20px;
+      animation-delay: 3.5s;
+    }
+    .ambient-orb.orb-4 {
+      width: 80px;
+      height: 80px;
+      bottom: -32px;
+      right: -28px;
+      animation-delay: 1.2s;
+    }
+
+    /* ==========================================================================
+       CARTE PRINCIPALE (CONTAINER BLANC PUR AVEC ADOUCISSEMENT)
+       ========================================================================== */
+    .hero-card {
+      position: relative;
+      width: 100%;
+      height: 750px;
+      background: linear-gradient(155deg, #FFFFFF 0%, #FAFCFE 50%, #EFF4F9 100%);
+      border-radius: 32px;
+      box-shadow: var(--shadow-main-card);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* Découpe nette de la photo en bas */
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       NAVBAR
+       ========================================================================== */
+    .navbar {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 34px 54px 10px;
+    }
+
+    /* Logo "konig." */
+    .nav-logo {
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 21px;
+      color: var(--accent);
+      letter-spacing: -0.6px;
+      cursor: pointer;
+    }
+    .nav-logo span {
+      color: var(--accent-light);
+    }
+
+    /* Menu central */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+    }
+    .nav-item {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.2px;
+      transition: color 0.2s ease;
+      position: relative;
+      padding-bottom: 5px;
+    }
+    .nav-item:hover {
+      color: var(--accent);
+    }
+    .nav-item.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 2.5px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* Bouton CTA "PARLONS-EN" */
+    .btn-talk {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 24px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-dark) 100%);
+      border-radius: 12px;
+      box-shadow: var(--shadow-btn);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-talk:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(20, 22, 26, 0.4);
+      background: linear-gradient(135deg, #2D3238 0%, #0D0E10 100%);
+    }
+    .btn-talk:active {
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       CONTENU DU HERO
+       ========================================================================== */
+    .hero-body {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ==========================================================================
+       HALOS D'ARRIÈRE-PLAN (BLANC BRILLANT & SHAPE DOUCE)
+       ========================================================================== */
+    /* Grand cercle très clair centré derrière le personnage */
+    .center-light-circle {
+      position: absolute;
+      width: 580px;
+      height: 580px;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 45%, rgba(240, 244, 250, 0) 72%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Halo ovoïde flou à gauche */
+    .left-ambient-glow {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      top: 15%;
+      left: 12%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(240, 245, 252, 0) 70%);
+      filter: blur(25px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       COLONNE GAUCHE (TEXTES & LIENS DE CONTACT)
+       ========================================================================== */
+    .left-section {
+      position: absolute;
+      left: 54px;
+      top: 48%;
+      transform: translateY(-50%);
+      width: 360px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .greeting {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-title);
+      letter-spacing: -0.4px;
+      margin-bottom: 4px;
+    }
+
+    .display-name {
+      font-family: var(--font-display);
+      font-size: 44px;
+      font-weight: 900;
+      color: var(--text-title);
+      letter-spacing: -0.5px;
+      line-height: 1.05;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-bottom: 22px;
+    }
+
+    .bio-text {
+      font-size: 10.5px;
+      line-height: 1.65;
+      color: var(--text-body);
+      max-width: 320px;
+      margin-bottom: 38px;
+    }
+
+    /* Bloc contact aligné exactement comme le modèle (pastille email + rangée icônes) */
+    .contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .email-chip {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      background: #FFFFFF;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 8.5px;
+      font-weight: 600;
+      color: var(--accent);
+      box-shadow: var(--shadow-pill);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      letter-spacing: 0.2px;
+      transition: all 0.2s ease;
+    }
+    .email-chip:hover {
+      box-shadow: 0 6px 18px rgba(120, 135, 155, 0.2);
+      transform: translateY(-1.5px);
+    }
+
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .social-btn svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s ease;
+    }
+
+    /* 1) Email : cercle noir charbon #22252A avec enveloppe blanche */
+    .social-btn.email-btn {
+      background: var(--accent);
+      color: #FFFFFF;
+      box-shadow: 0 6px 16px rgba(20, 22, 26, 0.26);
+    }
+    .social-btn.email-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(20, 22, 26, 0.36);
+      background: var(--accent-dark);
+    }
+
+    /* 2 & 3) GitHub & LinkedIn : cercle blanc, icône noire */
+    .social-btn.light-btn {
+      background: #FFFFFF;
+      color: var(--accent);
+      box-shadow: 0 4px 12px rgba(130, 145, 165, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+    }
+    .social-btn.light-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(130, 145, 165, 0.25);
+      color: var(--accent-dark);
+    }
+    .social-btn:hover svg {
+      transform: scale(1.1);
+    }
+
+    /* ==========================================================================
+       DÉCORS 3D CHROMÉS GRIS ARGENTÉ (TORUS & SPHÈRE)
+       ========================================================================== */
+    .decor-3d {
+      position: absolute;
+      pointer-events: none;
+      z-index: 5;
+      animation: float3D 6.5s ease-in-out infinite alternate;
+    }
+
+    /* Anneau chromé au-dessus à gauche de l'épaule (~x:200 y:172) */
+    .decor-torus {
+      width: 60px;
+      height: 60px;
+      left: 310px;
+      top: 130px;
+      filter: drop-shadow(0 14px 22px rgba(120, 130, 145, 0.32));
+      animation-duration: 7s;
+    }
+
+    /* Petite sphère chromée (~x:115 y:368) */
+    .decor-sphere {
+      width: 26px;
+      height: 26px;
+      left: 175px;
+      bottom: 215px;
+      filter: drop-shadow(0 8px 16px rgba(120, 130, 145, 0.35));
+      animation-duration: 5.5s;
+      animation-delay: 1.5s;
+    }
+
+    /* ==========================================================================
+       PERSONNAGE AU CENTRE
+       ========================================================================== */
+    .person-container {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .person-img {
+      max-height: 640px;
+      width: auto;
+      object-fit: contain;
+      object-position: bottom center;
+      display: block;
+      filter: drop-shadow(0 20px 35px rgba(80, 95, 115, 0.18));
+      user-select: none;
+    }
+
+    /* ==========================================================================
+       COLONNE DROITE (CARTES EN ZIG-ZAG FLOTTANTES)
+       ========================================================================== */
+    .card-anchor {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 12;
+      animation: gentleBob 6s ease-in-out infinite;
+    }
+
+    /* Position 1 : Haut (~x: 510 équivalent, aligné à 68% de gauche) */
+    .card-anchor.pos-top {
+      right: 210px;
+      top: 60px;
+      animation-delay: 0s;
+    }
+
+    /* Position 2 : Milieu droite (~x: 610 équivalent, plus à droite) */
+    .card-anchor.pos-mid {
+      right: 50px;
+      top: 250px;
+      animation-delay: 1.8s;
+    }
+
+    /* Position 3 : Bas (~x: 525 équivalent, réaligné) */
+    .card-anchor.pos-bottom {
+      right: 175px;
+      bottom: 65px;
+      animation-delay: 3.2s;
+    }
+
+    /* Boîte blanche de la carte */
+    .card-box {
+      background: #FFFFFF;
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: var(--shadow-card-float);
+      border: 1px solid rgba(255, 255, 255, 0.98);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+    }
+    .card-box:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 20px 42px rgba(110, 125, 145, 0.22);
+    }
+
+    .card-screen {
+      width: 140px;
+      height: 86px;
+      border-radius: 11px;
+      background: #F8FAFD;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #EBF1F7;
+    }
+
+    /* Connecteur : trait fin + point noir charbon */
+    .card-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 18px;
+    }
+    .conn-stem {
+      width: 1.5px;
+      height: 12px;
+      background: rgba(34, 37, 42, 0.2);
+    }
+    .conn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Label en pastille blanche dessous */
+    .card-tag {
+      background: #FFFFFF;
+      padding: 5px 14px;
+      border-radius: 9px;
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--accent);
+      box-shadow: var(--shadow-pill);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       VIGNETTES INTERNES FIDÈLES AU DESIGN
+       ========================================================================== */
+    /* 1. Écrans Flutter */
+    .flutter-screen-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #F3F7FA 0%, #E9F0F7 100%);
+      padding: 6px;
+    }
+    .mobile-frame {
+      width: 38px;
+      height: 68px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      border: 1.5px solid #22252A;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      padding: 3px;
+      overflow: hidden;
+    }
+    .mobile-frame.back {
+      transform: scale(0.9) translateY(2px);
+      opacity: 0.82;
+      border-color: #8C98A7;
+    }
+    .mf-bar {
+      width: 10px;
+      height: 1.5px;
+      background: #22252A;
+      border-radius: 1px;
+      margin: 0 auto 3px;
+    }
+    .mf-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5px;
+      height: 22px;
+      background: #F4F7FA;
+      padding: 2px;
+      border-radius: 2px;
+      margin: 3px 0;
+    }
+    .mf-chart-col {
+      flex: 1;
+      background: #A0ACB9;
+      border-radius: 1px;
+    }
+    .mf-chart-col.active {
+      background: var(--accent);
+    }
+    .mf-line {
+      height: 2.5px;
+      background: #D5DEE8;
+      border-radius: 1px;
+      margin-bottom: 2px;
+    }
+
+    /* 2. Schéma Automatisation IA (Nœuds & Connexions) */
+    .ai-screen-wrap {
+      width: 100%;
+      height: 100%;
+      background: #F8FAFD;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      position: relative;
+    }
+    .ai-path-line {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      height: 1.5px;
+      background: repeating-linear-gradient(90deg, #9BA7B7 0, #9BA7B7 3px, transparent 3px, transparent 6px);
+      z-index: 1;
+    }
+    .node-box {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #FFFFFF;
+      border: 1.5px solid #CCD5DF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .node-box.center-node {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #FFFFFF;
+      box-shadow: 0 4px 10px rgba(20, 22, 26, 0.25);
+    }
+
+    /* 3. Dashboard Web Next.js */
+    .web-screen-wrap {
+      width: 100%;
+      height: 100%;
+      background: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      padding: 6px;
+      gap: 4px;
+    }
+    .web-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 3px;
+      border-bottom: 1px solid #EEF3F8;
+    }
+    .mac-dots {
+      display: flex;
+      gap: 2.5px;
+    }
+    .mac-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #B4BFCC;
+    }
+    .web-layout {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+    }
+    .web-side {
+      width: 18px;
+      background: #F3F7FA;
+      border-radius: 3px;
+    }
+    .web-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .web-graph {
+      flex: 1;
+      background: #F8FAFD;
+      border-radius: 3px;
+      border: 1px solid #EAF0F6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       KEYFRAMES ANIMATIONS
+       ========================================================================== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes orbFloat {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(10px, -14px) scale(1.06);
+      }
+    }
+
+    @keyframes float3D {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-12px) rotate(5deg);
+      }
+    }
+
+    @keyframes gentleBob {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-9px);
+      }
+    }
+
+    /* ==========================================================================
+       RESPONSIVE (DESKTOP FIRST -> ADAPTATION SOUS 900PX)
+       ========================================================================== */
+    @media (max-width: 1180px) {
+      .hero-card {
+        height: 720px;
+      }
+      .display-name {
+        font-size: 38px;
+      }
+      .card-anchor.pos-mid {
+        right: 20px;
+      }
+      .card-anchor.pos-top {
+        right: 170px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 12px;
+      }
+
+      .hero-stage {
+        max-width: 100%;
+      }
+
+      .hero-card {
+        height: auto;
+        min-height: auto;
+        overflow: visible;
+        padding-bottom: 50px;
+      }
+
+      .navbar {
+        padding: 24px 24px 10px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .nav-menu {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        padding-top: 10px;
+      }
+
+      .hero-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 24px 0;
+        position: static;
+      }
+
+      .left-section {
+        position: static;
+        transform: none;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .display-name {
+        font-size: 38px;
+        white-space: normal;
+      }
+      .bio-text {
+        max-width: 100%;
+      }
+      .contact-block {
+        align-items: center;
+      }
+
+      .decor-3d {
+        display: none;
+      }
+
+      .person-container {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        height: auto;
+        width: 100%;
+        max-width: 360px;
+        margin-bottom: 40px;
+      }
+      .person-img {
+        max-height: 420px;
+        width: 100%;
+      }
+      .center-light-circle {
+        width: 340px;
+        height: 340px;
+      }
+
+      .card-anchor {
+        position: static !important;
+        animation: none !important;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="hero-stage">
+
+    <!-- Sphères translucides douces en arrière-plan (4 coins) -->
+    <div class="ambient-orb orb-1" aria-hidden="true"></div>
+    <div class="ambient-orb orb-2" aria-hidden="true"></div>
+    <div class="ambient-orb orb-3" aria-hidden="true"></div>
+    <div class="ambient-orb orb-4" aria-hidden="true"></div>
+
+    <!-- Carte principale Soft UI -->
+    <article class="hero-card">
+
+      <!-- NAVBAR -->
+      <header class="navbar">
+        <!-- Logo -->
+        <a href="#accueil" class="nav-logo" aria-label="Accueil Konigdev">
+          konig<span>.</span>
+        </a>
+
+        <!-- Liens -->
+        <nav class="nav-menu" aria-label="Navigation principale">
+          <a href="#accueil" class="nav-item active">Accueil</a>
+          <a href="#realisations" class="nav-item">Réalisations</a>
+          <a href="#services" class="nav-item">Services</a>
+          <a href="#a-propos" class="nav-item">À propos</a>
+        </nav>
+
+        <!-- CTA Droite -->
+        <a href="mailto:konigdev2286@gmail.com" class="btn-talk">
+          PARLONS-EN
+        </a>
+      </header>
+
+      <!-- CORPS DU HERO -->
+      <section class="hero-body">
+
+        <!-- Halos d'arrière-plan -->
+        <div class="center-light-circle" aria-hidden="true"></div>
+        <div class="left-ambient-glow" aria-hidden="true"></div>
+
+        <!-- Décors 3D chromés gris argenté -->
+        <!-- 1) Torus au-dessus de l'épaule -->
+        <svg class="decor-3d decor-torus" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="torusGrad" x1="10%" y1="10%" x2="90%" y2="90%">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="20%" stop-color="#E2E8F0" />
+              <stop offset="45%" stop-color="#94A3B8" />
+              <stop offset="70%" stop-color="#FFFFFF" />
+              <stop offset="90%" stop-color="#64748B" />
+              <stop offset="100%" stop-color="#334155" />
+            </linearGradient>
+            <filter id="torusShade">
+              <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#475569" flood-opacity="0.3"/>
+            </filter>
+          </defs>
+          <g filter="url(#torusShade)">
+            <path d="M50 14 C30.12 14 14 30.12 14 50 C14 69.88 30.12 86 50 86 C69.88 86 86 69.88 86 50 C86 30.12 69.88 14 50 14 Z M50 28 C62.15 28 72 37.85 72 50 C72 62.15 62.15 72 50 72 C37.85 72 28 62.15 28 50 C28 37.85 37.85 28 50 28 Z" fill="url(#torusGrad)"/>
+          </g>
+        </svg>
+
+        <!-- 2) Petite sphère en bas à gauche -->
+        <svg class="decor-3d decor-sphere" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="sphereGrad" cx="30%" cy="28%" r="70%">
+              <stop offset="0%" stop-color="#FFFFFF" />
+              <stop offset="35%" stop-color="#E2E8F0" />
+              <stop offset="75%" stop-color="#64748B" />
+              <stop offset="100%" stop-color="#334155" />
+            </radialGradient>
+          </defs>
+          <circle cx="25" cy="25" r="22" fill="url(#sphereGrad)" />
+        </svg>
+
+        <!-- COLONNE GAUCHE -->
+        <div class="left-section">
+          <p class="greeting">Bonjour, je suis</p>
+          <h1 class="display-name">KONIGDEV</h1>
+          <p class="bio-text">
+            Développeur full-stack et IA autodidacte, basé à Brazzaville. Je conçois
+            des sites web, des applications mobiles et des automatisations IA pour des
+            entreprises d'Afrique francophone et d'ailleurs.
+          </p>
+
+          <!-- Pastille e-mail + 3 icônes rondes en dessous -->
+          <div class="contact-block">
+            <a href="mailto:konigdev2286@gmail.com" class="email-chip">
+              konigdev2286@gmail.com
+            </a>
+
+            <div class="social-row">
+              <!-- 1) Email : cercle noir charbon #22252A -->
+              <a href="mailto:konigdev2286@gmail.com" class="social-btn email-btn" aria-label="M'envoyer un email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </a>
+
+              <!-- 2) GitHub : cercle blanc, logo noir charbon -->
+              <a href="https://github.com/konigdev2286" target="_blank" rel="noopener noreferrer" class="social-btn light-btn" aria-label="GitHub Konigdev">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+
+              <!-- 3) LinkedIn : cercle blanc, logo noir charbon -->
+              <a href="https://www.linkedin.com/in/esdras-thychel-mbouloukoue-07168a400" target="_blank" rel="noopener noreferrer" class="social-btn light-btn" aria-label="LinkedIn Konigdev">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERSONNAGE AU CENTRE -->
+        <div class="person-container">
+          <img
+            src="konigdev.png"
+            alt="Portrait de Konigdev"
+            class="person-img"
+          />
+        </div>
+
+        <!-- COLONNE DROITE : CARTES DE COMPÉTENCES EN ZIG-ZAG -->
+
+        <!-- CARTE 1 (Haut) : Applications mobiles Flutter -->
+        <div class="card-anchor pos-top">
+          <div class="card-box">
+            <div class="card-screen">
+              <div class="flutter-screen-wrap">
+                <!-- Téléphone 1 (principal) -->
+                <div class="mobile-frame">
+                  <div class="mf-bar"></div>
+                  <div class="mf-line" style="width: 70%;"></div>
+                  <div class="mf-chart">
+                    <div class="mf-chart-col" style="height: 35%;"></div>
+                    <div class="mf-chart-col active" style="height: 80%;"></div>
+                    <div class="mf-chart-col" style="height: 45%;"></div>
+                    <div class="mf-chart-col active" style="height: 95%;"></div>
+                  </div>
+                  <div class="mf-line" style="width: 85%;"></div>
+                  <div class="mf-line" style="width: 50%;"></div>
+                </div>
+                <!-- Téléphone 2 (décalé en arrière-plan) -->
+                <div class="mobile-frame back">
+                  <div class="mf-bar"></div>
+                  <div class="mf-line" style="width: 60%;"></div>
+                  <div class="mf-line" style="width: 80%;"></div>
+                  <div class="mf-chart">
+                    <div class="mf-chart-col active" style="height: 60%;"></div>
+                    <div class="mf-chart-col" style="height: 40%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Connecteur -->
+          <div class="card-connector">
+            <div class="conn-stem"></div>
+            <div class="conn-dot"></div>
+          </div>
+          <!-- Label -->
+          <span class="card-tag">Applications mobiles Flutter</span>
+        </div>
+
+        <!-- CARTE 2 (Milieu droite) : Automatisation IA -->
+        <div class="card-anchor pos-mid">
+          <div class="card-box">
+            <div class="card-screen">
+              <div class="ai-screen-wrap">
+                <div class="ai-path-line"></div>
+                <!-- Nœud 1 -->
+                <div class="node-box" title="Déclencheur">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22252A" stroke-width="2.4">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                </div>
+                <!-- Nœud IA (centre noir charbon) -->
+                <div class="node-box center-node" title="IA Logic">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2">
+                    <path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4v1a4 4 0 0 0 4 4 4 4 0 0 0 4-4v-1a4 4 0 0 0 4-4v-2a4 4 0 0 0-4-4V6a4 4 0 0 0-4-4z"></path>
+                  </svg>
+                </div>
+                <!-- Nœud 3 -->
+                <div class="node-box" title="Action">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22252A" stroke-width="2.4">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Connecteur -->
+          <div class="card-connector">
+            <div class="conn-stem"></div>
+            <div class="conn-dot"></div>
+          </div>
+          <!-- Label -->
+          <span class="card-tag">Automatisation IA</span>
+        </div>
+
+        <!-- CARTE 3 (Bas) : Développeur Next.js -->
+        <div class="card-anchor pos-bottom">
+          <div class="card-box">
+            <div class="card-screen">
+              <div class="web-screen-wrap">
+                <div class="web-top-bar">
+                  <div class="mac-dots">
+                    <div class="mac-dot"></div>
+                    <div class="mac-dot"></div>
+                    <div class="mac-dot"></div>
+                  </div>
+                  <span style="font-size: 6px; font-weight: 700; color: #22252A; letter-spacing: 0.5px;">NEXT.JS</span>
+                </div>
+                <div class="web-layout">
+                  <div class="web-side"></div>
+                  <div class="web-main">
+                    <div class="web-graph">
+                      <svg width="60" height="20" viewBox="0 0 60 20">
+                        <path d="M2 15 Q 15 4, 30 11 T 58 5" fill="none" stroke="#22252A" stroke-width="1.8" stroke-linecap="round"/>
+                        <circle cx="58" cy="5" r="2.2" fill="#22252A"/>
+                      </svg>
+                    </div>
+                    <div style="display: flex; gap: 3px; height: 13px;">
+                      <div style="flex: 1; background: #EEF3F8; border-radius: 2px;"></div>
+                      <div style="flex: 1; background: #EEF3F8; border-radius: 2px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Connecteur -->
+          <div class="card-connector">
+            <div class="conn-stem"></div>
+            <div class="conn-dot"></div>
+          </div>
+          <!-- Label -->
+          <span class="card-tag">Développeur Next.js</span>
+        </div>
+
+      </section>
+
+    </article>
+
+  </main>
+
+</body>
+</html>

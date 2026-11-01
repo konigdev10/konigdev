@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# référence externe des tests QR (npm install --no-save --prefix, jamais livrée)
+/scripts/.cache
