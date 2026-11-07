@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { SITE_CONFIG } from "@/lib/constants";
 
 const SOCIAL_LINKS = [
@@ -100,6 +101,23 @@ export default function Footer() {
       />
 
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center text-center relative z-10">
+
+        {/* Logo emblème interactif */}
+        <motion.div
+          whileHover={{ scale: 1.08, rotate: 6 }}
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          className="relative w-12 h-12 sm:w-14 sm:h-14 mb-2 cursor-pointer select-none"
+          aria-label="Logo KoniG.dev"
+        >
+          <Image
+            src="/logo.png"
+            alt="Logo KoniG.dev"
+            fill
+            sizes="56px"
+            className="object-contain"
+          />
+        </motion.div>
 
         {/* ==================================================================
             LETTRES GÉANTES INTERACTIVES "KoniGDeV" EN NOIR CHARBON

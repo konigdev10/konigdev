@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import { deconnecter } from "@/app/admin/actions";
@@ -91,13 +92,25 @@ export function AdminShell({
     <div className="flex min-h-screen bg-bg-page">
       {/* Sidebar — desktop */}
       <aside className="hidden w-60 shrink-0 flex-col border-r border-white/60 bg-gradient-to-b from-bg-card-start to-bg-card-end lg:flex">
-        <div className="px-6 py-7">
-          <p className="font-text text-[10px] font-semibold uppercase tracking-[0.18em] text-text-muted">
-            KoniG.dev
-          </p>
-          <p className="mt-0.5 font-display text-lg font-extrabold text-text-title">
-            Administration
-          </p>
+        <div className="px-6 py-6 flex items-center gap-3">
+          <div className="relative w-9 h-9 shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Logo KoniG.dev"
+              fill
+              sizes="36px"
+              priority
+              className="object-contain"
+            />
+          </div>
+          <div>
+            <p className="font-text text-[10px] font-semibold uppercase tracking-[0.18em] text-text-muted">
+              KoniG.dev
+            </p>
+            <p className="mt-0.5 font-display text-lg font-extrabold text-text-title">
+              Administration
+            </p>
+          </div>
         </div>
 
         <nav className="flex-1 px-3 pb-4" aria-label="Navigation admin">
@@ -161,7 +174,18 @@ export function AdminShell({
 
       {/* Header mobile */}
       <div className="fixed inset-x-0 top-0 z-20 flex h-14 items-center justify-between border-b border-white/60 bg-gradient-to-r from-bg-card-start to-bg-card-end px-4 lg:hidden">
-        <p className="font-display text-base font-extrabold text-text-title">Administration</p>
+        <div className="flex items-center gap-2.5">
+          <div className="relative w-7 h-7 shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Logo KoniG.dev"
+              fill
+              sizes="28px"
+              className="object-contain"
+            />
+          </div>
+          <p className="font-display text-base font-extrabold text-text-title">Administration</p>
+        </div>
         <button
           onClick={() => setMenuOuvert((v) => !v)}
           className="rounded-[10px] p-2 text-text-body hover:bg-accent/5"

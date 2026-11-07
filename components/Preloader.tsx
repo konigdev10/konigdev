@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import {
   PRELOADER_EXIT_DURATION_SECONDS,
@@ -108,8 +109,16 @@ export default function Preloader({
         variants={contentVariants}
       >
         <div className="w-full max-w-xl rounded-lg border border-white/10 bg-[#0a0a0a]/95 p-4 shadow-2xl sm:p-6">
-          <div className="mb-5 flex items-center gap-2 border-b border-white/10 pb-3 font-mono text-[10px] text-white/55 sm:text-xs">
-            <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+          <div className="mb-5 flex items-center gap-2.5 border-b border-white/10 pb-3 font-mono text-[10px] text-white/55 sm:text-xs">
+            <div className="relative w-4 h-4 shrink-0 opacity-80">
+              <Image
+                src="/logo-white.png"
+                alt="Logo KoniG.dev"
+                fill
+                sizes="16px"
+                className="object-contain"
+              />
+            </div>
             <span>konigdev — portfolio</span>
             <span className="ml-auto">session: active</span>
           </div>

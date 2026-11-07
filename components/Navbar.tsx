@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { usePreloader } from "@/components/PreloaderProvider";
 
@@ -240,10 +241,19 @@ export default function Navbar() {
             href="/"
             data-cursor="hover"
             tabIndex={isVisible ? 0 : -1}
-            className="whitespace-nowrap font-heading text-base font-extrabold tracking-tight text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-xl"
+            className="group flex items-center gap-2 whitespace-nowrap font-heading text-base font-extrabold tracking-tight text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:text-xl"
             aria-label="KoniG.dev — Accueil"
           >
-            KoniG.dev
+            <div className="relative w-6 h-6 shrink-0 transition-transform duration-200 group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt="Logo KoniG.dev"
+                fill
+                sizes="24px"
+                className="object-contain"
+              />
+            </div>
+            <span>KoniG.dev</span>
           </Link>
 
           <nav

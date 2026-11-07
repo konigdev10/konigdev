@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import ProjectBox from "@/components/projects/ProjectBox";
 import Footer from "@/components/Footer";
 import { getPublishedProjects } from "@/lib/projects-service";
@@ -50,10 +51,20 @@ export default async function RealisationsPage() {
         <div className="flex items-center gap-6">
           <Link
             href="/"
-            className="font-display font-extrabold text-xl tracking-tight text-[#22252A]"
+            className="group flex items-center gap-2 font-display font-extrabold text-xl tracking-tight text-[#22252A]"
             aria-label="Accueil Konigdev"
           >
-            konig<span className="text-[#3A3F46]">.</span>
+            <div className="relative w-7 h-7 shrink-0 transition-transform duration-200 group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt="Logo KoniG.dev"
+                fill
+                sizes="28px"
+                priority
+                className="object-contain"
+              />
+            </div>
+            <span>konig<span className="text-[#3A3F46]">.</span></span>
           </Link>
           <Link
             href="/contact"

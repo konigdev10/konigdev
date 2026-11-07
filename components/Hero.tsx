@@ -20,10 +20,20 @@ export default function Hero() {
         {/* Logo */}
         <Link
           href="/"
-          className="group flex items-center font-heading font-extrabold text-2xl tracking-tight text-[#22252A]"
+          className="group flex items-center gap-2.5 font-heading font-extrabold text-2xl tracking-tight text-[#22252A]"
           aria-label="Accueil Konigdev"
         >
-          konig<span className="text-[#3A3F46]">.</span>
+          <div className="relative w-8 h-8 shrink-0 transition-transform duration-200 group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="Logo KoniG.dev"
+              fill
+              sizes="32px"
+              priority
+              className="object-contain"
+            />
+          </div>
+          <span>konig<span className="text-[#3A3F46]">.</span></span>
         </Link>
 
         {/* Menu central */}

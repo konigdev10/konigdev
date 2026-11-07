@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getPublicEnv, getServerEnv } from "@/lib/env";
 import { ConnexionForm } from "@/components/admin/ConnexionForm";
 
@@ -51,16 +52,28 @@ export default function PageConnexion({
   return (
     <main className="flex min-h-screen items-center justify-center px-5 py-12">
       <div className="w-full max-w-[440px]">
-        <div className="mb-8">
-          <p className="font-text text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">
-            KoniG.dev
-          </p>
-          <h1
-            id="connexion-titre"
-            className="mt-2 font-display text-[30px] font-extrabold leading-[1.1] tracking-tight text-text-title"
-          >
-            Administration
-          </h1>
+        <div className="mb-8 flex items-center gap-3.5">
+          <div className="relative w-11 h-11 shrink-0">
+            <Image
+              src="/logo.png"
+              alt="Logo KoniG.dev"
+              fill
+              sizes="44px"
+              priority
+              className="object-contain"
+            />
+          </div>
+          <div>
+            <p className="font-text text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">
+              KoniG.dev
+            </p>
+            <h1
+              id="connexion-titre"
+              className="mt-1 font-display text-[26px] font-extrabold leading-[1.1] tracking-tight text-text-title"
+            >
+              Administration
+            </h1>
+          </div>
         </div>
 
         <div className="rounded-[28px] border border-white/95 bg-gradient-to-br from-bg-card-start to-bg-card-end p-7 shadow-contact-card sm:p-9">

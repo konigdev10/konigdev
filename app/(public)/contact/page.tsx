@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
@@ -49,9 +50,23 @@ export default function ContactPage() {
           <span>Retour à l&apos;accueil</span>
         </Link>
 
-        <span className="font-display font-extrabold text-sm text-[#22252A] tracking-tight">
-          konig<span className="text-[#3A3F46]">.</span>
-        </span>
+        <Link
+          href="/"
+          className="group flex items-center gap-2 font-display font-extrabold text-sm text-[#22252A] tracking-tight"
+          aria-label="Accueil Konigdev"
+        >
+          <div className="relative w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="Logo KoniG.dev"
+              fill
+              sizes="20px"
+              priority
+              className="object-contain"
+            />
+          </div>
+          <span>konig<span className="text-[#3A3F46]">.</span></span>
+        </Link>
       </div>
 
       {/* Carte du formulaire Soft UI */}
