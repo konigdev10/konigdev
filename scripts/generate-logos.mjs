@@ -166,11 +166,139 @@ async function generateAll() {
   );
   console.log("Saved: public/favicon.ico");
 
+  // Create Open Graph social share banner (1200x630)
+  await generateOgImage(logoPath);
+
+  // Create site.webmanifest
+  generateWebManifest();
+
   // Clean test files
   if (fs.existsSync("public/test-logo.png")) fs.unlinkSync("public/test-logo.png");
   if (fs.existsSync("public/test-favicon.ico")) fs.unlinkSync("public/test-favicon.ico");
 
   console.log("All logo assets generated successfully!");
+}
+
+async function generateOgImage(logoPath) {
+  const logoBuf = fs.readFileSync(logoPath);
+  const logoB64 = "data:image/png;base64," + logoBuf.toString("base64");
+  const width = 1200;
+  const height = 630;
+
+  const svgCard = Buffer.from(`
+    <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FFFFFF" />
+          <stop offset="50%" stop-color="#F8FAFD" />
+          <stop offset="100%" stop-color="#EDF2F7" />
+        </linearGradient>
+        <radialGradient id="halo" cx="75%" cy="35%" r="50%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.95)" />
+          <stop offset="100%" stop-color="rgba(237,242,247,0)" />
+        </radialGradient>
+        <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+          <feDropShadow dx="0" dy="16" stdDeviation="32" flood-color="#788291" flood-opacity="0.15" />
+        </filter>
+      </defs>
+
+      <rect width="${width}" height="${height}" fill="url(#bg)" />
+      <circle cx="900" cy="220" r="380" fill="url(#halo)" />
+
+      <rect x="36" y="36" width="1128" height="558" rx="32" fill="none" stroke="rgba(34,37,42,0.08)" stroke-width="1.5" />
+
+      <g transform="translate(96, 175)">
+        <rect x="-16" y="-16" width="312" height="312" rx="36" fill="#FFFFFF" stroke="rgba(34,37,42,0.08)" stroke-width="1.5" filter="url(#cardShadow)" />
+        <image href="${logoB64}" x="0" y="0" width="280" height="280" />
+      </g>
+
+      <g transform="translate(440, 180)">
+        <text x="0" y="40" font-family="'JetBrains Mono', monospace, system-ui" font-size="16" font-weight="600" letter-spacing="4" fill="#6B7480">
+          PORTFOLIO OFFICIEL • BRAZZAVILLE
+        </text>
+
+        <text x="0" y="115" font-family="'Syne', 'Bricolage Grotesque', sans-serif, system-ui" font-size="64" font-weight="900" letter-spacing="-1" fill="#14161A">
+          KoniG<tspan fill="#4A5663">.dev</tspan>
+        </text>
+
+        <text x="0" y="175" font-family="'Plus Jakarta Sans', sans-serif, system-ui" font-size="28" font-weight="700" fill="#22252A">
+          Esdras Thychel MBOULOUKOUE
+        </text>
+        <text x="0" y="215" font-family="'Plus Jakarta Sans', sans-serif, system-ui" font-size="22" font-weight="500" fill="#4A5663">
+          Développeur Full-Stack &amp; Solutions IA Freelance
+        </text>
+
+        <g transform="translate(0, 260)">
+          <g>
+            <rect x="0" y="0" width="105" height="36" rx="10" fill="#FFFFFF" stroke="rgba(34,37,42,0.1)" stroke-width="1" />
+            <text x="52" y="23" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#22252A">Next.js 14</text>
+          </g>
+          <g transform="translate(117, 0)">
+            <rect x="0" y="0" width="115" height="36" rx="10" fill="#FFFFFF" stroke="rgba(34,37,42,0.1)" stroke-width="1" />
+            <text x="57" y="23" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#22252A">TypeScript</text>
+          </g>
+          <g transform="translate(244, 0)">
+            <rect x="0" y="0" width="95" height="36" rx="10" fill="#FFFFFF" stroke="rgba(34,37,42,0.1)" stroke-width="1" />
+            <text x="47" y="23" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#22252A">Flutter</text>
+          </g>
+          <g transform="translate(351, 0)">
+            <rect x="0" y="0" width="105" height="36" rx="10" fill="#FFFFFF" stroke="rgba(34,37,42,0.1)" stroke-width="1" />
+            <text x="52" y="23" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#22252A">Supabase</text>
+          </g>
+          <g transform="translate(468, 0)">
+            <rect x="0" y="0" width="155" height="36" rx="10" fill="#FFFFFF" stroke="rgba(34,37,42,0.1)" stroke-width="1" />
+            <text x="77" y="23" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#22252A">Agents IA &amp; n8n</text>
+          </g>
+        </g>
+      </g>
+    </svg>
+  `);
+
+  const ogPath = path.join(PUBLIC_DIR, "og-image.png");
+  await sharp(svgCard).png({ quality: 95 }).toFile(ogPath);
+  console.log("Saved: public/og-image.png");
+}
+
+function generateWebManifest() {
+  const manifest = {
+    name: "KoniG.dev — Esdras Thychel MBOULOUKOUE",
+    short_name: "KoniG.dev",
+    description:
+      "Portfolio d'Esdras Thychel MBOULOUKOUE (KoniG.dev), développeur full-stack et IA freelance.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#FFFFFF",
+    theme_color: "#14161A",
+    icons: [
+      {
+        src: "/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        src: "/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        src: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+      {
+        src: "/icon.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any maskable",
+      },
+    ],
+  };
+
+  fs.writeFileSync(
+    path.join(PUBLIC_DIR, "site.webmanifest"),
+    JSON.stringify(manifest, null, 2)
+  );
+  console.log("Saved: public/site.webmanifest");
 }
 
 async function writeIcoFile(pngBuffers, outPath) {

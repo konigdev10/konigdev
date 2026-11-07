@@ -1,9 +1,20 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function NotFound() {
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-gradient-to-b from-[#EEF2F7] via-[#F5F8FC] to-[#EEF2F7] text-center">
-      <div className="w-full max-w-lg p-8 sm:p-12 rounded-[28px] bg-gradient-to-br from-[#F4F7FA] to-[#EDF1F6] border border-white/95 shadow-contact-card">
+      <div className="w-full max-w-lg p-8 sm:p-12 rounded-[28px] bg-gradient-to-br from-[#F4F7FA] to-[#EDF1F6] border border-white/95 shadow-contact-card flex flex-col items-center">
+        <div className="relative w-14 h-14 mb-4">
+          <Image
+            src="/logo.png"
+            alt="Logo KoniG.dev"
+            fill
+            sizes="56px"
+            priority
+            className="object-contain"
+          />
+        </div>
         <span className="font-mono text-xs uppercase tracking-widest text-[#6B7480] block mb-2">
           Erreur 404
         </span>

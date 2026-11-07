@@ -41,9 +41,13 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://konigdev.com"
+  ),
   title: "Esdras Thychel MBOULOUKOUE | KoniG.dev — Développeur Full-Stack & IA Freelance",
   description:
     "Portfolio d'Esdras Thychel MBOULOUKOUE (KoniG.dev), développeur full-stack et IA freelance basé à Brazzaville. Applications web modernes, agents IA et architectures logicielles sur-mesure pour fondateurs et équipes.",
+  manifest: "/site.webmanifest",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -54,6 +58,31 @@ export const metadata: Metadata = {
     ],
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title:
+      "Esdras Thychel MBOULOUKOUE | KoniG.dev — Développeur Full-Stack & IA Freelance",
+    description:
+      "Applications web modernes, agents IA et architectures logicielles sur-mesure pour fondateurs et équipes.",
+    url: "https://konigdev.com",
+    siteName: "KoniG.dev",
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "KoniG.dev — Développeur Full-Stack & IA Freelance",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Esdras Thychel MBOULOUKOUE | KoniG.dev",
+    description:
+      "Applications web modernes, agents IA et architectures logicielles sur-mesure pour fondateurs et équipes.",
+    images: ["/og-image.png"],
   },
 };
 

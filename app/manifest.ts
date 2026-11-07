@@ -1,0 +1,38 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "KoniG.dev — Esdras Thychel MBOULOUKOUE",
+    short_name: "KoniG.dev",
+    description:
+      "Portfolio d'Esdras Thychel MBOULOUKOUE (KoniG.dev), développeur full-stack et IA freelance.",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#FFFFFF",
+    theme_color: "#14161A",
+    icons: [
+      {
+        src: "/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        src: "/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        src: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+      {
+        src: "/icon.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+    ],
+  };
+}
+

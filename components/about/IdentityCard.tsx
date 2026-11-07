@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { IDENTITY_DETAILS, SKILL_CATEGORIES } from "@/lib/about-data";
 
 export default function IdentityCard() {
@@ -20,9 +21,20 @@ export default function IdentityCard() {
               BLOC GAUCHE : FICHE D'IDENTITÉ (LIGNES SÉPARÉES PAR FILET FIN)
               ============================================================== */}
           <div className="lg:col-span-5 bg-white rounded-[22px] border border-white/95 p-6 sm:p-7 shadow-pill-relief">
-            <span className="font-text text-xs font-bold uppercase tracking-wider text-[#22252A] block mb-5 pb-3 border-b border-[rgba(34,37,42,0.08)]">
-              Fiche d&apos;identité
-            </span>
+            <div className="flex items-center justify-between mb-5 pb-3 border-b border-[rgba(34,37,42,0.08)]">
+              <span className="font-text text-xs font-bold uppercase tracking-wider text-[#22252A]">
+                Fiche d&apos;identité
+              </span>
+              <div className="relative w-6 h-6">
+                <Image
+                  src="/logo.png"
+                  alt="Logo KoniG.dev"
+                  fill
+                  sizes="24px"
+                  className="object-contain"
+                />
+              </div>
+            </div>
 
             <div className="divide-y divide-[rgba(34,37,42,0.06)]">
               {IDENTITY_DETAILS.map((detail) => (
